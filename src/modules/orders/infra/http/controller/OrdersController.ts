@@ -7,10 +7,25 @@ import FindOrderService from '@modules/orders/services/FindOrderService';
 
 export default class OrdersController {
   public async show(request: Request, response: Response): Promise<Response> {
-    // TODO
+    const { id } = request.body;
+
+    const FindOrderById = container.resolve(FindOrderService);
+
+    const order = await FindOrderById.execute({ id });
+
+    return response.json(order);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    // TODO
+    const { customer_id, products } = request.body;
+
+    const CreateOrder = container.resolve(CreateOrderService);
+
+    const order = await CreateOrder.execute({
+      customer_id,
+      products,
+    });
+
+    return response.json(order);
   }
 }
